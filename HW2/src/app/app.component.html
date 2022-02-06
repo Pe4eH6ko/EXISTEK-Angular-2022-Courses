@@ -1,0 +1,35 @@
+<div class=filterContainer [ngStyle]="{'text-align':'center','display':'flex', 'flex-direction':'row','justify-content':'space-around'}">
+  <label >Filter by {{title}}: </label>
+  <input type="text" [(ngModel)]="title">
+  <button (click)="phoneFilter(title)" [ngClass]="{'filterButton':true, 'filtredColor':filtredColor}">Send</button>
+</div>
+<div class='mainContainer'>
+  <div *ngFor ='let item of phones; let i = index;' attr.id="{{item.firm.name}}" [ngClass] ="{'phoneContainer' : true}">
+    <ng-container *ngIf = "item.firm.name==='Apple';else elseBlock1">
+      <img class='phoneImg' src='../assets/img/iphone-13-pro-max.jpg' alt="apple">
+    </ng-container>
+    <ng-template #elseBlock1>
+      <ng-container *ngIf = "item.firm.name ===  'Samsung'; else elseBlock2">
+        <img class='phoneImg' src="../assets/img/Galaxy-Z-Fold3.jpg" alt="samsung">
+      </ng-container>
+      <ng-template #elseBlock2>
+        <img class='phoneImg' src="../assets/img/11T-Pro.jpg" alt="xiaomi">
+      </ng-template>
+    </ng-template>
+    <ul>
+      <li *ngFor = 'let element of item | keyvalue | slice:1'>
+        <ng-container *ngIf = "element.key === 'model'; else elseBlock1">
+          {{item.model.name}}
+          <li *ngFor = 'let prop of item.model| keyvalue'>
+            {{prop.key}}: {{prop.value}}  
+          </li>
+        </ng-container>
+        <ng-template #elseBlock1>
+          <ng-container *ngIf = "element.key === 'firm'; else elseBlock2">{{item.firm.name}}</ng-container>
+          <ng-template #elseBlock2>{{element.key}}: {{element.value}}</ng-template>
+        </ng-template>  
+      </li>
+    </ul>
+    <button class='buyButton'>BUY</button>
+  </div>
+</div>
