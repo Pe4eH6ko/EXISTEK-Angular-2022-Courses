@@ -1,0 +1,12 @@
+<ul *ngFor="let person of persons">
+    <li>
+        {{person.personName}}
+        <div id="{{person.id}}" class="visible"><input type="text" [(ngModel)]="person.personName"><button (click)="saveNewName(person)">Save</button></div>
+        <button *ngIf="person.heirs.length>0" (click)="showNested(person)">...</button>
+        <button (click)="editName(person)">Edit</button>
+        <button (click)="deleteElement(person)">Delete</button>
+        <button (click)="addPerson(person)">Add</button>
+        <button (click)="showMessage(person, $event)">Message</button>
+        <persons [persons]="person.heirs" *ngIf="person.childAccess" (allMessages)="showChildrenMessage($event)"></persons>
+    </li>
+</ul>
