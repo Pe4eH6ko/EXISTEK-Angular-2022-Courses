@@ -1,0 +1,35 @@
+<button (click)="makeArray()">Show Table</button><button (click)="resetTable()">Reset</button>
+<div *ngIf="formVisible">
+  <input type="text" id="filterInput">
+  <div>
+    <input type="radio" id="less" name="filter" value="less">
+    <label for="less">&lt;</label>
+
+    <input type="radio" id="more" name="filter" value="more">
+    <label for="more">&gt;</label>
+
+    <input type="radio" id="equal" name="filter" value="equal">
+    <label for="equal">=</label>
+
+    <input type="radio" id="contains" name="filter" value="contains">
+    <label for="contains">Сontains</label>
+  </div>
+  <button (click)="sendFilter()">Submit</button>
+</div>
+<table *ngIf = "buildTable">
+  <tr>
+    <th>Code</th>
+    <th>Confirmed <button (click)="filterCol('confirmed')">Filter</button></th>
+    <th>Country <button (click)="filterCol('country')">Filter</button></th>
+    <th>Critical <button (click)="filterCol('critical')">Filter</button></th>
+    <th>Deaths <button (click)="filterCol('deaths')">Filter</button></th>
+    <th>Laste Change</th>
+    <th>Last Update</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>Recovered <button (click)="filterCol('recovered')">Filter</button></th>
+  </tr>
+  <tr *ngFor="let country of counriesArray | customPipe: filter: filterValue: filterInput">
+    <td *ngFor="let key of country | keyvalue">{{key.value}}</td>
+  </tr>
+</table>
