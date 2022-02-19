@@ -1,0 +1,113 @@
+<form [formGroup] ='form' (ngSubmit)="onSubmit()">
+  <div formGroupName="studentName">
+    <p>Full Name:</p>
+    <div>
+      <label for="firstName">First Name</label>
+      <input id="firstName" type="text" formControlName ="firstName">
+      <span class="error" *ngIf="getGroup('studentName').controls['firstName'].hasError('required')">required</span>
+      <span class="error" *ngIf="getGroup('studentName').controls['firstName'].hasError('englishChars')">On English please</span>
+    </div>
+    <div>
+      <label for="middleName">Middle Name</label>
+      <input id="middleName" type="text" formControlName ="middleName">
+    </div>
+    <div>
+      <label for="lastName">Laste Name</label>
+      <input id="lastName" type="text" formControlName ="lastName">
+      <span class="error" *ngIf="getGroup('studentName').controls['lastName'].hasError('required')">required</span>
+      <span class="error" *ngIf="getGroup('studentName').controls['lastName'].hasError('englishChars')">On English please</span>
+    </div>
+  </div>
+  <div>
+    <label for="birthDate">Birth Date</label>
+    <input id="birthDate" type="date" formControlName ="birthDate">
+    <span class="error" *ngIf="form.controls['birthDate'].hasError('required')">required</span>
+  </div>
+  <div>
+    <label for="gender">Gender</label>
+    <input type="list" list="gender-list" id="gender" formControlName="gender">
+    <datalist id="gender-list">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </datalist>
+    <span class="error" *ngIf="form.controls['gender'].hasError('required')">required</span>
+  </div>
+  <div formGroupName="address">
+    <p>Address:</p>
+    <div>
+      <label for="streetAddress">Street Adress</label>
+      <input id="streetAddress" type="text" formControlName ="streetAddress">
+      <span class="error" *ngIf="getGroup('address').controls['streetAddress'].hasError('required')">required</span>
+    </div>
+    <div>
+      <label for="workAddress">Work Address</label>
+      <input id="workAddress" type="text" formControlName ="workAddress">
+      <label for="sameAddress">Work from home</label>
+      <input type="checkbox" name="sameAddress" id="sameAddress" (change)="workAddressValue()">
+    </div>
+    <div>
+      <label for="city">City</label>
+      <input id="city" type="text" formControlName ="city">
+      <span class="error" *ngIf="getGroup('address').controls['city'].hasError('required')">required</span>
+    </div>
+    <div>
+      <label for="stateProvince">State/Province</label>
+      <input id="stateProvince" type="text" formControlName ="stateProvince">
+      <span class="error" *ngIf="getGroup('address').controls['stateProvince'].hasError('required')">required</span>
+    </div>
+    <div>
+      <label for="postalZipCode">Postal/Zip Code</label>
+      <input id="lastName" type="text" formControlName ="postalZipCode">
+      <span class="error" *ngIf="getGroup('address').controls['postalZipCode'].hasError('required')">required</span>
+    </div>
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input type="email" id="email" formControlName="email">
+    <span class="error" *ngIf="form.controls['email'].hasError('required')">required</span>
+  </div>
+  <div formArrayName="phones">
+    <div *ngFor = "let phone of getFormsControls()['controls']; let i =index">
+      <label id="phone{{i}}">Mobile Number</label>
+      <input type="tel" id="{{i}}" formControlName="{{i}}">
+      <button (click)="removeNumber(i)">Remove</button>
+      <button (click)="editNumber(i)">Edit</button>
+      <span class="error" *ngIf="getArray().at(i).hasError('required')">required</span>
+      <span class="error" *ngIf="getArray().at(i).hasError('mobileOperators')">non-existent operator</span>
+    </div>
+    <div *ngIf="visible">
+      <input id="labelChange" type="text">
+      <button (click)='saveLabel()'>Save</button>
+    </div>
+    <button (click)="addPhoneNumber()">Add Mobile Number</button>
+  </div>
+  <div>
+    <label for="courses"> Courses</label>
+    <input type="list" list="courses-list" id="courses" formControlName="courses">
+    <datalist id="courses-list">
+      <option value="JavaScript">JavaScript</option>
+      <option value="TypeScript">TypeScript</option>
+      <option value="Java">Java</option>
+      <option value="Python">Python</option>
+      <option value="PHP">PHP</option>
+      <option value=".NET">.NET</option>
+      <option value="C++">C++</option>
+      <option value="Ruby">Ruby</option>
+      <option value="Go">Go</option>
+      <option value="Swift">Swift</option>
+      <option value="C#">C#</option>
+    </datalist>
+    <span class="error" *ngIf="form.controls['courses'].hasError('required')">required</span>
+  </div>
+  <div>
+    <label for="higherEducation">Higher Education</label>
+    <input type="checkbox" id="higherEducation" formControlName="higherEducation">
+    <span class="error" *ngIf="form.controls['higherEducation'].hasError('required')">required</span>
+  </div>
+  <div>
+    <label for="comments">Coments</label>
+    <textarea type="textarea" id="comments" formControlName="comments"></textarea>
+  </div>
+  <button type="submit" [disabled]="form.invalid">Send Information</button>
+</form>
