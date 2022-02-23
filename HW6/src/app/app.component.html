@@ -1,0 +1,16 @@
+<button (click)="addNewUser()">Add New User</button>
+
+<p *ngFor="let user of users">
+  <span>{{user.id}}</span>
+  <span>{{user.email}}</span>
+  <span [ifNumber]="user.firstName">{{user.firstName}}</span>
+  <span>{{user.lastName}}</span>
+  <span>{{user.birthDay}}</span>
+  <span>Address: </span>
+  <span>{{user.city}}</span>
+  <span [ifNumber]="user.streetNumber">{{user.streetNumber}}</span>
+  <span>{{user.zipCode}}</span>
+  <span>{{user.phone}}</span>
+  <button (click)="updateUserPassword(user)">Update User</button>
+  <button (click)="deleteUser(user)">Delete User</button>
+</p>
